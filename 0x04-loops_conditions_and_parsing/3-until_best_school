@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 # This script is displaying "Holberton School" 10 times
 
-i=0
-while [ $i -lt 10 ]
+i=10
+until [ $i -lt 1 ]
 do
 	echo "Best School"
-	(( i++ ))
+	(( i-- ))
 done

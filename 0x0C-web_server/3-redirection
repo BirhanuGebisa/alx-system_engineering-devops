@@ -1,11 +1,20 @@
 #!/usr/bin/env bash
-# Script that configures a new Ubuntu machine to respect above requirements
+# A script that redirects
+sudo apt-get -y update
+sudo apt-get -y install nginx
+sudo touch /var/www/html/index.html
+echo "Hello World!" > /var/www/html/index.html
+printf %s "
+server {
+    listen 80 default_server;
+    listen [::]:80 default_server;
 
-sudo apt-get update
-sudo apt-get install -y nginx
+    root /var/www/html;
 
-echo "Holberton School" | sudo tee /var/www/html/index.html
-new_string="server_name _;\n\trewrite ^\/redirect_me https:\/\/www.youtube.com\/watch?v=xJJsoquu70o permanent;"
-sudo sed -i "s/server_name _;/$new_string/" /etc/nginx/sites-enabled/default
+    index index.html index.htm index.nginx-debian.html;
 
-sudo service nginx restart
+    location /redirect_me {
+        return 301 https://www.youtube.com/watch?v=QH2-TGUlwu4;
+    }
+}" | sudo tee /etc/nginx/sites-available/default
+sudo service nginx reload
